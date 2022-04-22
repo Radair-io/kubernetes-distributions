@@ -14,7 +14,7 @@ spec:
       name: c2mon-es-node
     spec:
       containers:
-      - image: docker.elastic.co/elasticsearch/elasticsearch:8.1.2@sha256:aff26414403c2e970b2813d5bb871797b9c9ccea910db98200d43bb5dbfa0fb1
+      - image: docker.io/elasticsearch
         name: c2mon-es-node
         env:
         - name: namespace
