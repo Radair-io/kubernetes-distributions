@@ -13,8 +13,11 @@ spec:
         type: es
       name: c2mon-es-node
     spec:
+      securityContext:
+        runAsUser: elasticsearch
+        runAsGroup: elasticsearch
       containers:
-      - image: docker.io/elasticsearch
+      - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.0
         name: c2mon-es-node
         env:
         - name: namespace
