@@ -1,4 +1,4 @@
-namespace: c2mon-dev
+namespace: c2mon-cern
 bases:
   - persistence
   - c2mon
