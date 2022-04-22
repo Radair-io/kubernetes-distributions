@@ -30,7 +30,7 @@ spec:
         - name: network.host
           value: "0.0.0.0"
         - name: user
-          value: 'elasticsearch'  
+          value: 'testuser'  
         # Required in ES 5.6 images, as they don't pick up ENV config properly
         args: ["-Enode.name=$(node.name)",
                "-Ecluster.name=$(cluster.name)",
