@@ -1,19 +1,17 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: elasticsearch
-  labels:
-    service: elasticsearch
+  name: es-node
 spec:
-  serviceName: es
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      service: elasticsearch
+      type: es
   template:
     metadata:
       labels:
-        service: elasticsearch
+        type: es
+      name: c2mon-es-node
     spec:
       terminationGracePeriodSeconds: 300
       initContainers:
@@ -45,39 +43,41 @@ spec:
         securityContext:
           privileged: true
       containers:
-      - name: elasticsearch
-        image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.2.4
+      - image: docker.io/justinamary/elastic_image:latest
+        name: c2mon-es-node
+        env:
+        - name: namespace
+          valueFrom:
+           fieldRef:
+            fieldPath: metadata.namespace
+        - name: node.name
+          valueFrom:
+           fieldRef:
+            fieldPath: metadata.name
+        - name: cluster.name
+          value: c2mon
+        - name: network.host
+          value: "0.0.0.0"
+        # Required in ES 5.6 images, as they don't pick up ENV config properly
+        args: ["-Enode.name=$(node.name)",
+               "-Ecluster.name=$(cluster.name)",
+               "-Enetwork.host=$(network.host)",
+               "-Ediscovery.type=single-node"]
         ports:
         - containerPort: 9200
-          name: http
         - containerPort: 9300
-          name: tcp
-        resources:
-          requests:
-            memory: 4Gi
-          limits:
-            memory: 6Gi
-        env:
-          - name: cluster.name
-            value: elasticsearch-cluster
-          - name: node.name
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: discovery.zen.ping.unicast.hosts
-            value: "elasticsearch-0.es.default.svc.cluster.local,elasticsearch-1.es.default.svc.cluster.local,elasticsearch-2.es.default.svc.cluster.local"
-          - name: ES_JAVA_OPTS
-            value: -Xms4g -Xmx4g
-        volumeMounts:
-        - name: data
-          mountPath: /usr/share/elasticsearch/data
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: ssd
-      resources:
-        requests:
-          storage: 10Gi
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: es
+spec:
+  clusterIP: None
+  ports:
+    - name: serving
+      port: 9200
+    - name: node-to-node
+      port: 9300
+  selector:
+    type: es
