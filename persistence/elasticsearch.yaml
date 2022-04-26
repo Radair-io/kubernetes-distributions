@@ -17,8 +17,7 @@ spec:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         securityContext:
           capabilities:
-            add:
-            - elasticsearch
+            fsGroup: 1000
         name: c2mon-es-node
         env:
         - name: namespace
