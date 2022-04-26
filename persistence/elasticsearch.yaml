@@ -48,9 +48,9 @@ spec:
             value: "elasticsearch-0.es.default.svc.cluster.local,elasticsearch-1.es.default.svc.cluster.local,elasticsearch-2.es.default.svc.cluster.local"
           - name: ES_JAVA_OPTS
             value: -Xms4g -Xmx4g
-        volumeMounts:
-        - name: data
-          mountPath: /usr/share/elasticsearch/data
+        # volumeMounts:
+        # - name: data
+        #   mountPath: /usr/share/elasticsearch/data
   # volumeClaimTemplates:
   # - metadata:
   #     name: data
