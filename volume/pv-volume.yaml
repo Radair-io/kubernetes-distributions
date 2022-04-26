@@ -1,16 +1,17 @@
-# @format
-
 apiVersion: v1
 kind: PersistentVolume
-- metadata:
-  name: task-pv-volume
-  labels:
-    type: local
+metadata:
+  name: pv0003
 spec:
-  storageClassName: manual
   capacity:
-    storage: 10Gi
+    storage: 5Gi
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  hostPath:
-    path: /usr/share/elasticsearch/data
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
