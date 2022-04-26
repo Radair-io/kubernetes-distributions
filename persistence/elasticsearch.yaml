@@ -14,8 +14,10 @@ spec:
       name: c2mon-es-node
     spec:
       securityContext:
-       uid: 1000
-       gid: 1000 
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
