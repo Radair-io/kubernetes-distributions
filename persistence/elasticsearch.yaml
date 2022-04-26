@@ -5,7 +5,6 @@ metadata:
   labels:
     type: es
 spec:
-  serviceName: es
   replicas: 1
   selector:
     matchLabels:
@@ -71,13 +70,13 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: ssd
-      resources:
-        requests:
-          storage: 10Gi
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: data
+  #   spec:
+  #     accessModes:
+  #       - ReadWriteOnce
+  #     storageClassName: ssd
+  #     resources:
+  #       requests:
+  #         storage: 10Gi
