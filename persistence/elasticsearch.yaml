@@ -13,13 +13,8 @@ spec:
         type: es
       name: c2mon-es-node
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: "OnRootMismatch"
       containers:
-      - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.0
+      - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
         env:
         - name: namespace
