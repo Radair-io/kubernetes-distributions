@@ -1,14 +1,16 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: task-pv-volume
+  name: pv-volume # The name of your persistent volume.
+  namespace: default
   labels:
-    type: local
+    storage: data # The labels used when matching with a Persistent Volume Claim.
 spec:
-  storageClassName: manual
   capacity:
     storage: 10Gi
   accessModes:
-    - ReadWriteOnce
-  hostPath:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    # server: 192.168.86.252 # The FQDN server name or IP of the NFS server goes here.
     path: /usr/share/elasticsearch/data
