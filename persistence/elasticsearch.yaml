@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: es-node
 spec:
+  securityContext:
+    fsGroup: 1000 
   replicas: 1
   selector:
     matchLabels:
@@ -13,8 +15,6 @@ spec:
         type: es
       name: c2mon-es-node
     spec:
-     securityContext:
-        fsGroup: 1000 
       containers:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         name: c2mon-es-node
