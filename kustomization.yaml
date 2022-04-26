@@ -1,4 +1,4 @@
-namespace: c2mon-dev
+namespace: c2mon-dev-new
 bases:
   - persistence
   - c2mon
