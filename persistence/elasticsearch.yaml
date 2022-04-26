@@ -5,6 +5,7 @@ metadata:
   labels:
     type: es
 spec:
+  serviceName: es
   replicas: 1
   selector:
     matchLabels:
