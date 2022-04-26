@@ -14,9 +14,9 @@ spec:
       name: c2mon-es-node
     spec:
       securityContext:
-       runAsUser: 2000
-       runAsGroup: 3000
-       fsGroup: 2000
+       runAsUser: 1000
+       runAsGroup: 1000
+       fsGroup: 1000
       containers:
       - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
