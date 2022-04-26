@@ -36,7 +36,7 @@ spec:
            fieldRef:
             fieldPath: metadata.namespace
         - name: node.name
-          valueFrom:
+          valueFrom:  
            fieldRef:
             fieldPath: metadata.name
         - name: cluster.name
@@ -54,6 +54,11 @@ spec:
         ports:
         - containerPort: 9200
         - containerPort: 9300
+        resources:
+          requests:
+            memory: 4Gi
+          limits:
+            memory: 6Gi
       restartPolicy: Always
   volumeClaimTemplates:
   - metadata:
