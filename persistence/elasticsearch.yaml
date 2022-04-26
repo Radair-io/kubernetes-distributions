@@ -18,7 +18,7 @@ spec:
        runAsGroup: 2000
        # fsGroup: 1000
       containers:
-      - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
+      - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
         env:
         - name: namespace
