@@ -69,16 +69,6 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: ssd
-      resources:
-        requests:
-          storage: 10Gi
 ---
 apiVersion: v1
 kind: Service
