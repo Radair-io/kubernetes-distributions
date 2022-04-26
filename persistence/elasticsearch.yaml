@@ -11,7 +11,7 @@ spec:
     metadata:
       labels:
         type: es
-      name: c2mon-es-node
+      name: c2mon-es-node  
     spec:
       terminationGracePeriodSeconds: 300
       initContainers:
@@ -43,30 +43,42 @@ spec:
         securityContext:
           privileged: true
       containers:
-      - image: docker.io/justinamary/elastic_image:latest
-        name: c2mon-es-node
-        env:
-        - name: namespace
-          valueFrom:
-           fieldRef:
-            fieldPath: metadata.namespace
-        - name: node.name
-          valueFrom:
-           fieldRef:
-            fieldPath: metadata.name
-        - name: cluster.name
-          value: c2mon
-        - name: network.host
-          value: "0.0.0.0"
-        # Required in ES 5.6 images, as they don't pick up ENV config properly
-        args: ["-Enode.name=$(node.name)",
-               "-Ecluster.name=$(cluster.name)",
-               "-Enetwork.host=$(network.host)",
-               "-Ediscovery.type=single-node"]
+      - name: c2mon-es-node
+        image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         ports:
         - containerPort: 9200
+          name: http
         - containerPort: 9300
-      restartPolicy: Always
+          name: tcp
+        resources:
+          requests:
+            memory: 4Gi
+          limits:
+            memory: 6Gi
+        env:
+          - name: cluster.name
+            value: elasticsearch-cluster
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: discovery.zen.ping.unicast.hosts
+            value: "elasticsearch-0.es.default.svc.cluster.local,elasticsearch-1.es.default.svc.cluster.local,elasticsearch-2.es.default.svc.cluster.local"
+          - name: ES_JAVA_OPTS
+            value: -Xms4g -Xmx4g
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: ssd
+      resources:
+        requests:
+          storage: 10Gi
 ---
 apiVersion: v1
 kind: Service
@@ -80,4 +92,4 @@ spec:
     - name: node-to-node
       port: 9300
   selector:
-    type: es
+    type: es          
