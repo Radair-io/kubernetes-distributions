@@ -12,11 +12,9 @@ spec:
       labels:
         type: es
       name: c2mon-es-node
-      fsGroup:
-        rule: RunAsAny
-      privileged: true
-      runAsUser:
-        rule: RunAsAny
+  securityContext:
+    uid: 1000
+    gid: 1000 
     spec:
       containers:
       - image: docker.io/justinamary/elastic_image:latest
