@@ -1,7 +1,9 @@
+# @format
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv-volume-2
+  name: task-pv-volume
   labels:
     type: local
 spec:
@@ -9,6 +11,6 @@ spec:
   capacity:
     storage: 10Gi
   accessModes:
-    ReadWriteOnce
+    - ReadWriteOnce
   hostPath:
-    path: "/mnt/data"
+    path: /usr/share/elasticsearch/data
