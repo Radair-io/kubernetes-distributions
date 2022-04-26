@@ -14,7 +14,7 @@ spec:
       name: c2mon-es-node
     spec:
       containers:
-      - image: docker.io/justinamary/elastic_image:latest
+      - image: cern/c2mon-ext:elasticsearch-6.4.3-c2mon-1.9.3-SNAPSHOT
         name: c2mon-es-node
         env:
         - name: namespace
