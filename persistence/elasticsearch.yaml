@@ -24,9 +24,6 @@ spec:
         - chown -R 1000:1000 /usr/share/elasticsearch/data
         securityContext:
           privileged: true
-        volumeMounts:
-        - name: data
-          mountPath: /usr/share/elasticsearch/data
       containers:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         name: c2mon-es-node
@@ -54,22 +51,7 @@ spec:
         ports:
         - containerPort: 9200
         - containerPort: 9300
-        resources:
-          requests:
-            memory: 4Gi
-          limits:
-            memory: 6Gi
       restartPolicy: Always
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: ssd
-      resources:
-        requests:
-          storage: 10Gi    
 ---
 apiVersion: v1
 kind: Service
