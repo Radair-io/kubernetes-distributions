@@ -11,4 +11,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /usr/share/elasticsearch/data
+    path: 
+    - /usr/share/elasticsearch/data
