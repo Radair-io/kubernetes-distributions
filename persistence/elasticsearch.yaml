@@ -12,6 +12,8 @@ spec:
       labels:
         type: es
       name: c2mon-es-node
+      securityContext:
+        fsGroup: 1000 
     spec:
       containers:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
@@ -38,9 +40,6 @@ spec:
         - containerPort: 9200
         - containerPort: 9300
       restartPolicy: Always
-spec:
-  securityContext:
-    fsGroup: 1000      
 ---
 apiVersion: v1
 kind: Service
