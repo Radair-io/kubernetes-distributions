@@ -44,9 +44,6 @@ spec:
                "-Ecluster.name=$(cluster.name)",
                "-Enetwork.host=$(network.host)",
                "-Ediscovery.type=single-node"]
-        volumeMounts:
-        - name: data
-          mountPath: /usr/share/elasticsearch/data       
         ports:
         - containerPort: 9200
         - containerPort: 9300
