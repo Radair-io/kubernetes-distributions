@@ -1,7 +1,9 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: es-node
+  labels:
+    type: es
 spec:
   replicas: 1
   selector:
@@ -11,7 +13,6 @@ spec:
     metadata:
       labels:
         type: es
-      name: c2mon-es-node  
     spec:
       terminationGracePeriodSeconds: 300
       initContainers:
@@ -44,7 +45,7 @@ spec:
           privileged: true
       containers:
       - name: c2mon-es-node
-        image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
+        image: docker.io/justinamary/elastic_image:latest
         ports:
         - containerPort: 9200
           name: http
@@ -69,17 +70,13 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: es
-spec:
-  clusterIP: None
-  ports:
-    - name: serving
-      port: 9200
-    - name: node-to-node
-      port: 9300
-  selector:
-    type: es          
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: ssd
+      resources:
+        requests:
+          storage: 10Gi
