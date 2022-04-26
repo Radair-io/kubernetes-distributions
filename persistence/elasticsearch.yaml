@@ -14,8 +14,8 @@ spec:
       name: c2mon-es-node
     spec:
       securityContext:
-        uid: 1000
-        gid: 1000 
+       uid: 1000
+       gid: 1000 
       containers:
       - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
