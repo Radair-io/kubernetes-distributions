@@ -12,6 +12,13 @@ spec:
       labels:
         type: es
       name: c2mon-es-node
+  nodeSets:
+  - name: default
+    count: 3
+    podTemplate:
+      spec:
+        securityContext:
+          fsGroup: 1000
     spec:
       containers:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
