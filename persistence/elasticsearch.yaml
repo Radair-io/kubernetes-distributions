@@ -12,12 +12,12 @@ spec:
       labels:
         type: es
       name: c2mon-es-node
+      fsGroup:
+        rule: RunAsAny
+      privileged: true
+      runAsUser:
+        rule: RunAsAny
     spec:
-      securityContext:
-        runAsUser: 1000
-        runAsGroup: 3000
-        fsGroup: 2000
-        fsGroupChangePolicy: "OnRootMismatch"
       containers:
       - image: docker.io/justinamary/elastic_image:latest
         name: c2mon-es-node
