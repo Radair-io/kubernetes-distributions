@@ -63,12 +63,12 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: data
-      annotations:
-        volume.beta.kubernetes.io/storage-class: "elastic-ssd"
+      # annotations:
+      #   volume.beta.kubernetes.io/storage-class: "elastic-ssd"
     spec:
       accessModes:
         - ReadWriteOnce
-      storageClassName: elastic-ssd
+      storageClassName: ssd
       resources:
         requests:
           storage: 10Gi    
