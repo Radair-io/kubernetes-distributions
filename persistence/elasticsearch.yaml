@@ -24,7 +24,7 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - name: volume
+        - name: c2mon-volume
           mountPath: /usr/share/elasticsearch/data
       - name: increase-the-vm-max-map-count
         image: busybox
@@ -64,7 +64,7 @@ spec:
                "-Enetwork.host=$(network.host)",
                "-Ediscovery.type=single-node"]
         volumeMounts:
-        - name: volume
+        - name: c2mon-volume
           mountPath: /usr/share/elasticsearch/data       
         ports:
         - containerPort: 9200
@@ -75,9 +75,9 @@ spec:
           limits:
             memory: 6Gi
       volumes:
-      - name: volume
+      - name: c2mon-volume
         persistentVolumeClaim:
-          claimName: c2mon-volume     
+          # claimName: c2mon-volume     
       restartPolicy: Always 
 ---
 apiVersion: v1
