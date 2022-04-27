@@ -13,10 +13,16 @@ spec:
         type: es
       name: c2mon-es-node
     spec:
-      securityContext:
-       runAsNonRoot: true
-       runAsUser: 1000
-       # fsGroup: 1000
+      terminationGracePeriodSeconds: 300
+      initContainers:
+      - name: fix-the-volume-permission
+        image: busybox
+        command:
+        - sh
+        - -c
+        - chown -R 1000:1000 /usr/share/elasticsearch/data
+        securityContext:
+          privileged: true
       containers:
       - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         name: c2mon-es-node
