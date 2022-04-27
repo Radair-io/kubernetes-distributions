@@ -1,10 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: volume-claim
+  name: c2mon-volume-claim
 spec:
   accessModes:
   - ReadWriteOnce
+  volumeMode: Filesystem
   resources:
     requests:
       storage: 10Gi

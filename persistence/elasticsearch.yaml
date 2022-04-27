@@ -77,7 +77,7 @@ spec:
       volumes:
       - name: volume
         persistentVolumeClaim:
-          claimName: volume-claim      
+          claimName: c2mon-volume      
       restartPolicy: Always 
 ---
 apiVersion: v1
