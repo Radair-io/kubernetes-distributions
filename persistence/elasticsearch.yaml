@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: es-node
 spec:
-  serviceName: es
   replicas: 1
   selector:
     matchLabels:
