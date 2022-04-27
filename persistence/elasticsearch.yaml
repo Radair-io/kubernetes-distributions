@@ -28,7 +28,7 @@ spec:
         - name: data
           mountPath: /usr/share/elasticsearch/data
       containers:
-      - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.0
+      - image: cern/c2mon-ext:elasticsearch-5.6-c2mon-1.9.3-SNAPSHOT
         name: c2mon-es-node
         env:
         - name: namespace
@@ -43,11 +43,6 @@ spec:
           value: c2mon
         - name: network.host
           value: "0.0.0.0"
-        # Required in ES 5.6 images, as they don't pick up ENV config properly
-        args: ["-Enode.name=$(node.name)",
-               "-Ecluster.name=$(cluster.name)",
-               "-Enetwork.host=$(network.host)",
-               "-Ediscovery.type=single-node"]
         volumeMounts:
         - name: data
           mountPath: /usr/share/elasticsearch/data       
