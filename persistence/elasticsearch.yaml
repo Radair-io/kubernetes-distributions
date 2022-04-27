@@ -68,7 +68,7 @@ spec:
     spec:
       accessModes:
         - ReadWriteOnce
-      # storageClassName: ssd
+      storageClassName: elastic-ssd
       resources:
         requests:
           storage: 10Gi    
