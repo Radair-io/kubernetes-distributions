@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: es-node
 spec:
@@ -25,7 +25,7 @@ spec:
         securityContext:
           privileged: true
         volumeMounts:
-        - name: data
+        - name: volume
           mountPath: /usr/share/elasticsearch/data
       - name: increase-the-vm-max-map-count
         image: busybox
@@ -65,7 +65,7 @@ spec:
                "-Enetwork.host=$(network.host)",
                "-Ediscovery.type=single-node"]
         volumeMounts:
-        - name: data
+        - name: volume
           mountPath: /usr/share/elasticsearch/data       
         ports:
         - containerPort: 9200
@@ -75,19 +75,11 @@ spec:
             memory: 4Gi
           limits:
             memory: 6Gi
-      restartPolicy: Always
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-      # annotations:
-      #   volume.beta.kubernetes.io/storage-class: "elastic-ssd"
-    spec:
-      accessModes:
-        - ReadWriteOnce
-      storageClassName: ssd
-      resources:
-        requests:
-          storage: 10Gi    
+      volumes:
+      - name: volume
+        persistentVolumeClaim:
+          claimName: volume-claim      
+      restartPolicy: Always 
 ---
 apiVersion: v1
 kind: Service
